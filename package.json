@@ -1,0 +1,11 @@
+{
+  "name": "upi-pay-page",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A UPI payment page: payee details from env, QR and pay button that open the payer's UPI app",
+  "scripts": {
+    "dev": "node dev.js",
+    "deploy": "vercel --prod"
+  },
+  "license": "MIT"
+}

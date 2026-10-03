@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pay</title>
+  <meta name="description" content="Pay securely using any UPI app.">
+  <meta name="robots" content="noindex">
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <main class="sheet" id="sheet" hidden>
+    <header class="head">
+      <p class="eyebrow">Payment to</p>
+      <h1 id="payee">&nbsp;</h1>
+      <p class="vpa mono" id="vpa">&nbsp;</p>
+    </header>
+
+    <section class="amount-block">
+      <label class="amount-label" for="amount" id="amount-label">Amount</label>
+      <div class="amount-input">
+        <span class="rupee" id="symbol">&#8377;</span>
+        <input id="amount" type="text" inputmode="decimal" placeholder="0.00" autocomplete="off">
+      </div>
+      <p class="amount-fixed mono" id="amount-fixed" hidden></p>
+      <p class="hint" id="exact-hint" hidden>Pay this exact amount, paise included. That is how we find your payment.</p>
+      <p class="err" id="amount-err" hidden></p>
+      <div class="quick" id="quick" hidden></div>
+    </section>
+
+    <section class="note-block" id="note-block">
+      <p class="note-text" id="note"></p>
+    </section>
+
+    <!-- Primary action on a phone. On desktop it stays visible but demoted. -->
+    <section class="pay-block" id="pay-block">
+      <a class="pay-btn" id="pay" href="#" role="button">Pay with any UPI app</a>
+      <p class="hint" id="pay-hint"></p>
+
+      <div class="apps" id="apps"></div>
+    </section>
+
+    <section class="qr-block" id="qr-block">
+      <p class="qr-title" id="qr-title">Or scan with any UPI app</p>
+      <div class="qr-frame">
+        <canvas id="qr"></canvas>
+      </div>
+    </section>
+
+    <!-- Unique-amount mode: the exact amount identifies the payment, so the
+         payer only has to say they paid. Hidden otherwise. -->
+    <section class="confirm-block" id="confirm-block" hidden>
+      <div id="claim-form">
+        <button class="submit-btn" id="claim-submit" type="button">I've paid</button>
+        <p class="hint">Tap this after the payment goes through in your UPI app.</p>
+        <p class="err" id="claim-err" hidden></p>
+      </div>
+
+      <div class="status" id="claim-status" hidden>
+        <p class="status-badge" id="status-badge"></p>
+        <p class="status-msg" id="status-msg"></p>
+        <p class="status-meta mono" id="status-meta"></p>
+        <button class="link-btn" id="claim-another" type="button" hidden>Make another payment</button>
+      </div>
+    </section>
+
+    <footer class="foot">
+      <p>Works with Google&nbsp;Pay, PhonePe, Paytm, BHIM and any other UPI app.</p>
+      <p class="fine">You will confirm the amount inside your UPI app before any money moves.</p>
+    </footer>
+  </main>
+
+  <div class="state" id="loading">
+    <div class="spinner" aria-hidden="true"></div>
+    <p>Loading payment details…</p>
+  </div>
+
+  <div class="state" id="fatal" hidden>
+    <h2 id="fatal-title">Payment unavailable</h2>
+    <p id="fatal-msg"></p>
+    <pre class="mono setup" id="fatal-setup" hidden></pre>
+  </div>
+
+  <script src="vendor/qrious.min.js"></script>
+  <script src="app.js"></script>
+</body>
+
+</html>

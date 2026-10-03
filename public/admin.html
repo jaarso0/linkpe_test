@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Verify payments</title>
+  <meta name="robots" content="noindex">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .admin { max-width: 760px; }
+    .admin h1 { text-align: left; margin-top: 0; }
+    .bar { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; margin: 0.75rem 0 1rem; }
+    .tab {
+      font: inherit; font-size: 0.82rem; padding: 0.35rem 0.8rem; border-radius: 999px;
+      border: 1px solid var(--line); background: transparent; color: var(--dim); cursor: pointer;
+    }
+    .tab[aria-pressed="true"] { background: var(--field); color: var(--text); border-color: var(--dim); }
+    .bar .spacer { flex: 1; }
+    .claim {
+      border: 1px solid var(--line); border-radius: 12px; padding: 0.85rem 1rem; margin-bottom: 0.6rem;
+      display: grid; grid-template-columns: 1fr auto; gap: 0.25rem 1rem; align-items: center;
+    }
+    .claim .amt { font-size: 1.25rem; font-weight: 650; }
+    .claim .when { font-size: 0.9rem; }
+    .claim .meta { font-size: 0.78rem; color: var(--dim); grid-column: 1; word-break: break-word; }
+    .claim .actions { grid-column: 2; grid-row: 1 / span 3; display: flex; flex-direction: column; gap: 0.4rem; }
+    .act {
+      font: inherit; font-size: 0.82rem; font-weight: 600; padding: 0.45rem 0.9rem; border-radius: 10px;
+      border: 1px solid var(--line); background: var(--field); color: var(--text); cursor: pointer;
+    }
+    .act.ok { background: var(--brand); color: var(--brand-ink); border-color: var(--brand); }
+    .act.no { color: var(--err); }
+    .pill { font-size: 0.7rem; font-weight: 650; text-transform: uppercase; letter-spacing: 0.05em; color: var(--dim); }
+    .pill.verified { color: var(--brand); }
+    .pill.rejected { color: var(--err); }
+    .pill.pending { color: var(--text); }
+    .empty { color: var(--dim); text-align: center; padding: 2rem 0; }
+    @media (max-width: 480px) {
+      .claim { grid-template-columns: 1fr; }
+      .claim .actions { grid-column: 1; grid-row: auto; flex-direction: row; }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="sheet admin">
+    <h1>Verify payments</h1>
+
+    <form id="login" class="login">
+      <p class="hint left">Enter the <span class="mono">ADMIN_TOKEN</span> from your environment.</p>
+      <input class="field mono" id="token" type="password" autocomplete="current-password" placeholder="Admin token">
+      <p class="err" id="login-err" hidden></p>
+      <button class="submit-btn" type="submit">Open</button>
+    </form>
+
+    <section id="board" hidden>
+      <p class="hint left">Open your bank or UPI app. For each credit there, type its amount below
+        (like <span class="mono">10.37</span>) and verify the payment it matches. Check the time too:
+        an amount can be reused after an hour.</p>
+
+      <input class="field mono" id="search" type="text" inputmode="decimal" autocomplete="off"
+        placeholder="Find by amount, e.g. 10.37">
+
+      <div class="bar">
+        <button class="tab" data-filter="pending" aria-pressed="true">Says paid</button>
+        <button class="tab" data-filter="awaiting" aria-pressed="false">Not tapped</button>
+        <button class="tab" data-filter="verified" aria-pressed="false">Verified</button>
+        <button class="tab" data-filter="rejected" aria-pressed="false">Rejected</button>
+        <button class="tab" data-filter="all" aria-pressed="false">All</button>
+        <span class="spacer"></span>
+        <button class="tab" id="refresh">Refresh</button>
+        <button class="tab" id="logout">Lock</button>
+      </div>
+
+      <p class="err" id="board-err" hidden></p>
+      <div id="list"></div>
+    </section>
+  </main>
+
+  <script src="admin.js"></script>
+</body>
+
+</html>
