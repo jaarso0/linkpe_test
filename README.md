@@ -4,6 +4,8 @@ A payment page you deploy once. Your UPI details live in environment variables; 
 
 No dependencies, no build step, no framework.
 
+FINDING: only supports payments recieved for merchant UPI accounts
+
 ## Setup
 
 ```bash
